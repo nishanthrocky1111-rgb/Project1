@@ -1,0 +1,1931 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lorry Transport Agency</title>
+    <style>
+        /* All existing CSS remains the same */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url("https://www.motoroids.com/wp-content/uploads/2015/02/3.2_keyvisual_trucks1.jpg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+        .header {
+            background-color: rgba(168, 168, 167, 0.9);
+            color: black;
+            padding: 15px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logout-btn {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .logout-btn:hover {
+            background-color: #d32f2f;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #020521;
+            text-align: center;
+        }
+        .services {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        .service {
+            width: 45%;
+            padding: 15px;
+            background: #c2bdb6;
+            margin: 10px;
+            border-radius: 5px;
+            text-align: center;
+            box-sizing: border-box;
+        }
+        .service img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+        }
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #008011;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #00660d;
+        }
+        .contact {
+            text-align: center;
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(168, 168, 167, 0.9);
+            color: white;
+        }
+        /* Login Page */
+        #loginPage {
+            max-width: 350px;
+            margin: 100px auto;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            display: block;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        #loginPage label, #loginPage input, #loginPage button {
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+            box-sizing: border-box;
+        }
+        #bookingPage {
+            display: none;
+        }
+        
+        /* Payment Module Styles */
+        .payment-options {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+        }
+        .payment-option {
+            text-align: center;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 5px;
+            transition: all 0.3s;
+            width: 30%;
+        }
+        .payment-option:hover {
+            background-color: #f0f0f0;
+        }
+        .payment-option img {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+        }
+        .payment-option.selected {
+            border: 2px solid #008011;
+            background-color: #e8f5e9;
+        }
+        .payment-details {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .payment-details.active {
+            display: block;
+        }
+        .payment-qr {
+            text-align: center;
+            margin: 15px 0;
+        }
+        .payment-qr img {
+            max-width: 200px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .payment-success {
+            display: none;
+            text-align: center;
+            color: #008011;
+            font-weight: bold;
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #e8f5e9;
+            border-radius: 5px;
+        }
+        
+        /* Success Messages */
+        .success-message {
+            display: none;
+            text-align: center;
+            color: #008011;
+            font-weight: bold;
+            margin: 15px 0;
+            padding: 15px;
+            background-color: #e8f5e9;
+            border-radius: 5px;
+            border-left: 5px solid #008011;
+        }
+        
+        /* Booking Details Styles */
+        .booking-details {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #008011;
+        }
+        .booking-details h3 {
+            color: #020521;
+            margin-top: 0;
+        }
+        .booking-details p {
+            margin: 8px 0;
+            font-size: 16px;
+        }
+        .booking-details strong {
+            color: #333;
+        }
+        
+        /* Cost Calculation Styles */
+        .cost-calculation {
+            background: #f0f7ff;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #2196F3;
+        }
+        .cost-calculation h3 {
+            color: #020521;
+            margin-top: 0;
+        }
+        .cost-breakdown {
+            margin: 10px 0;
+        }
+        .cost-item {
+            display: flex;
+            justify-content: space-between;
+            margin: 5px 0;
+        }
+        .cost-total {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid #ddd;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .rental-type {
+            display: flex;
+            margin: 10px 0;
+        }
+        .rental-type label {
+            display: flex;
+            align-items: center;
+            margin-right: 15px;
+            cursor: pointer;
+        }
+        .rental-type input {
+            width: auto;
+            margin-right: 5px;
+        }
+        
+        /* Admin Page Styles */
+        #adminPage {
+            display: none;
+            max-width: 1000px;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        .admin-nav {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+        .admin-nav button {
+            background: none;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            color: #333;
+            width: auto;
+        }
+        .admin-nav button.active {
+            border-bottom: 3px solid #008011;
+            color: #008011;
+            font-weight: bold;
+        }
+        .admin-section {
+            display: none;
+        }
+        .admin-section.active {
+            display: block;
+        }
+        .bookings-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .bookings-table th, .bookings-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        .bookings-table th {
+            background-color: #f2f2f2;
+        }
+        .bookings-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .status-pending {
+            color: #ff9800;
+            font-weight: bold;
+        }
+        .status-confirmed {
+            color: #008011;
+            font-weight: bold;
+        }
+        .status-cancelled {
+            color: #f44336;
+            font-weight: bold;
+        }
+        .action-btn {
+            padding: 5px 10px;
+            margin: 0 5px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            width: auto;
+        }
+        .confirm-btn {
+            background-color: #008011;
+            color: white;
+        }
+        .cancel-btn {
+            background-color: #f44336;
+            color: white;
+        }
+        .view-btn {
+            background-color: #2196F3;
+            color: white;
+        }
+        .admin-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .stat-card {
+            background-color: #f5f5f5;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+            width: 22%;
+            margin: 5px;
+            box-sizing: border-box;
+        }
+        .stat-card h3 {
+            margin: 0;
+            color: #333;
+        }
+        .stat-card p {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 10px 0 0;
+            color: #008011;
+        }
+        
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 600px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close:hover {
+            color: black;
+        }
+        
+        /* Fee Settings Styles */
+        .fee-settings {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .fee-setting {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #2196F3;
+        }
+        .fee-setting h4 {
+            margin-top: 0;
+            color: #020521;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .service {
+                width: 100%;
+            }
+            .payment-options {
+                flex-direction: column;
+                align-items: center;
+            }
+            .payment-option {
+                width: 80%;
+                margin-bottom: 10px;
+            }
+            .admin-stats {
+                flex-direction: column;
+            }
+            .stat-card {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+            .admin-nav {
+                flex-direction: column;
+            }
+            .admin-nav button {
+                width: 100%;
+                margin-bottom: 5px;
+            }
+            .modal-content {
+                width: 95%;
+                margin: 10% auto;
+            }
+            .fee-settings {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <span>𝓛𝓸𝓻𝓻𝔂 Transport Agency 🚛</span>
+    <button id="logoutBtn" class="logout-btn" style="display: none;">Logout</button>
+</div>
+
+<!-- Login Page -->
+<div id="loginPage">
+    <h2>Login</h2>
+    <form id="loginForm">
+        <label for="username">Username</label>
+        <input type="text" id="username" required>
+
+        <label for="password">Password</label>
+        <input type="password" id="password" required>
+
+        <button type="submit">Login</button>
+        <p id="errorMessage" style="color: red;"></p>
+    </form>
+</div>
+
+<!-- Booking Page (Hidden Initially) -->
+<div id="bookingPage">
+    <div class="container">
+        <h2>Explore Our Vehicles</h2>
+        <div class="services">
+            <div class="service">
+                <img src="https://truckcdn.cardekho.com/in/tata/1815-lpt/tata-1815-lpt.jpg" alt="TATA LPT">
+                <h3>TATA LPT</h3>
+                <p>A Heavy-Duty Truck</p>
+                <p>Price per day: ₹7,000, per hour:₹300 </p>
+            </div>
+            <div class="service">
+                <img src="https://5.imimg.com/data5/IOS/Default/2023/6/320806107/EY/LC/ZV/186633041/product-jpeg.png" alt="Bharath Benz HDT T">
+                <h3>Bharath Benz HDT T</h3>
+                <p>A Heavy-Duty Truck</p>
+                <p>Price per day: ₹25,000,per hour:₹1000</p>
+            </div>
+            <div class="service">
+                <img src="https://truckcdn.cardekho.com/in/tata/407-g-sfc/tata-407-g-sfc.jpg" alt="TATA 407">
+                <h3>TATA 407</h3>
+                <p>A Heavy-Duty Truck</p>
+                <p>Price per day:₹12,000,per hour:₹500</p>
+            </div>
+            <div class="service">
+                <img src="https://www.cmv360.com/_next/image?url=https%3A%2F%2Fd1odgbsvvxl2qd.cloudfront.net%2Fsmall_Eicher_Pro_2110_CNG_Truck_d4edb70c39.webp&w=3840&q=75.jpg" alt="Eicher Pro 3019">
+                <h3>Eicher Pro 3019 </h3>
+                <p>A Heavy-Duty Truck</p>
+                <p>Price per day:₹5,000,per hour:₹200</p>
+            </div>
+            <div class="service">
+                <img src="https://5.imimg.com/data5/SELLER/Default/2022/6/DW/CQ/JR/126360925/1597393298-tata-signa-tipper-truck-1-.jpg" alt="TATA Signa 4825">
+                <h3>TATA Signa 4825</h3>
+                <p>A Heavy-Duty Truck</p>
+                <p>Price per day:₹8,000,per hour:₹350</p>
+            </div>
+            <div class="service">
+                <img src="https://img.linemedia.com/img/s/dump-truck-Volvo-FM-400-8x4-Bordmatic---1727369990312147022_big--24092619515981524100.jpg" alt="Volvo FM 400 HD">
+                <h3>Volvo FM 400 HD</h3>
+                <p>A Heavy-Duty Truck</p>
+                <p>Price per day:₹20,000,per hour:₹900</p>
+            </div>
+            <div class="service">
+                <img src="https://svmchaser.wordpress.com/wp-content/uploads/2015/06/442fc-dsc_5767.jpg" alt="Mahindra Tyuxo 31-202 HP">
+                <h3>Mahindra Tyuxo 31-202 HP</h3>
+                <p>A Heavy-Duty Truck</p>
+                <p>Price per day:₹18,000,per hour:₹800</p>
+            </div>
+            <div class="service">
+                <img src="https://5.imimg.com/data5/FM/UO/UQ/GLADMIN-33643285/6c36b18a27367c18af97cb978bf58f36-500x500-500x500.jpg" alt="Eicher Pro 6000 Series">
+                <h3>Eicher Pro 6000 Series</h3>
+                <p>A Heavy-Duty Truck</p>
+                <p>Price per day:₹25,000,per hour:₹1000</p>
+            </div>
+            <div class="service">
+                <img src="https://4.imimg.com/data4/AL/XM/IMOB-47670626/img_20180522_115142-jpg.jpg" alt="Asok Leyland V3718">
+                <h3>Asok Leyland V3718 </h3>
+                <p>A Heavy-Duty Truck</p>
+                <p>Price per day:₹25,000,per hour:₹1000</p>
+            </div>
+            <div class="service">
+                <img src="https://truckcdn.cardekho.com/in/mahindra/blazo-x-48-10x2-haulage/mahindra-blazo-x-48-10x2-haulage.jpg" alt="Mahindra Blazo X46">
+                <h3>Mahindra Blazo X46</h3>
+                <p>A Heavy-Duty Truck</p>
+                <p>Price per day:₹15,000,per hour:₹600</p>
+            </div>
+            <div class="service">
+                <img src="https://5.imimg.com/data5/SELLER/Default/2024/2/390279483/GV/IX/LF/23382559/whatsapp-image-2024-02-19-at-6-53-20-pm-1-500x500.jpeg" alt="TATA Signa 4225.TK Tipper">
+                <h3>TATA Signa 4225.TK Tipper</h3>
+                <p>A Heavy-Duty Truck</p>
+                <p>Price per day:₹20,000,per hour:₹900</p>
+            </div>            
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>Rental Page</h2>
+        
+        <!-- Booking Success Section -->
+        <div id="bookingSuccessSection" style="display: none;">
+            <div class="success-message">
+                ✅ Booking Confirmed Successfully!
+            </div>
+            
+            <div class="booking-details">
+                <h3>Booking Details</h3>
+                <p><strong>Booking ID:</strong> <span id="bookingIdDisplay"></span></p>
+                <p><strong>Customer Name:</strong> <span id="customerNameDisplay"></span></p>
+                <p><strong>Contact Number:</strong> <span id="contactDisplay"></span></p>
+                <p><strong>Booking Date:</strong> <span id="dateDisplay"></span></p>
+                <p><strong>Location:</strong> <span id="locationDisplay"></span></p>
+                <p><strong>Vehicle:</strong> <span id="vehicleDisplay"></span></p>
+                <p><strong>Rental Type:</strong> <span id="rentalTypeDisplay"></span></p>
+                <p><strong>Duration:</strong> <span id="durationDisplay"></span></p>
+                <p><strong>Total Cost:</strong> <span id="costDisplay"></span></p>
+                <p><strong>Payment Method:</strong> <span id="paymentDisplay"></span></p>
+                <p><strong>Status:</strong> <span id="statusDisplay" class="status-pending">Pending</span></p>
+            </div>
+            
+            <div class="success-message">
+                🚛 Your lorry will be delivered to the specified location on the booking date.<br>
+                📞 Our team will contact you shortly for confirmation.
+            </div>
+            
+            <button id="newBookingBtn" class="action-btn confirm-btn" style="width: auto; margin: 20px auto; display: block;">
+                Make Another Booking
+            </button>
+        </div>
+        
+        <form id="bookingForm">
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" required>
+            </div>
+            <div class="form-group">
+                <label for="contact">Contact Number</label>
+                <input type="tel" id="contact" required>
+            </div>
+            <div class="form-group">
+                <label for="date">Booking Date</label>
+                <input type="date" id="date" required>
+            </div>
+            <div class="form-group">
+                <label for="location">Location</label>
+                <input type="text" id="location" required>
+            </div>
+            <div class="form-group">
+                <label for="service">Select Vehicle</label>
+                <select id="service">
+                    <option value="TATA LPT">TATA LPT</option>
+                    <option value="TATA 407">TATA 407</option>
+                    <option value="Eicher Pro 3019">Eicher Pro 3019</option>
+                    <option value="TATA Signa 4825">TATA Signa 4825</option>
+                    <option value="Volvo FM 400 HD">Volvo FM 400 HD</option>
+                    <option value="Mahindra Tyuxo 31-202 HP">Mahindra Tyuxo 31-202 HP</option>
+                    <option value="Eicher Pro 6000 Series">Eicher Pro 6000 Series</option>
+                    <option value="Asok Leyland V3718">Asok Leyland V3718</option>
+                    <option value="Mahindra Blazo X46">Mahindra Blazo X46</option>
+                    <option value="TATA Signa 4225.TK Tipper">TATA Signa 4225.TK Tipper</option>
+                    <option value="Bharath Benz HDT T">Bharath Benz HDT T</option>
+                </select>
+            </div>
+            
+            <!-- Rental Type and Duration -->
+            <div class="form-group">
+                <label>Rental Type</label>
+                <div class="rental-type">
+                    <label>
+                        <input type="radio" name="rentalType" value="hourly" checked>
+                        Hourly Rental
+                    </label>
+                    <label>
+                        <input type="radio" name="rentalType" value="daily">
+                        Daily Rental
+                    </label>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="duration">Duration</label>
+                <input type="number" id="duration" min="1" value="1" required>
+                <span id="durationUnit">hours</span>
+            </div>
+            
+            <!-- Cost Calculation -->
+            <div class="cost-calculation">
+                <h3>Cost Calculation</h3>
+                <div class="cost-breakdown">
+                    <div class="cost-item">
+                        <span>Vehicle Rental:</span>
+                        <span id="vehicleCost">₹0</span>
+                    </div>
+                    <div class="cost-item">
+                        <span>Service Tax (<span id="taxPercentage">10</span>%):</span>
+                        <span id="taxAmount">₹0</span>
+                    </div>
+                    <div class="cost-item">
+                        <span>Maintenance Fee:</span>
+                        <span id="maintenanceFee">₹500</span>
+                    </div>
+                </div>
+                <div class="cost-total">
+                    <span>Total Cost:</span>
+                    <span id="totalCost">₹0</span>
+                </div>
+            </div>
+            
+            <!-- Payment Module -->
+            <div class="form-group">
+                <label>Select Payment Method</label>
+                <div class="payment-options">
+                    <div class="payment-option" data-payment="gpay">
+                        <img src="https://akm-img-a-in.tosshub.com/indiatoday/images/story/202105/Google-Pay-hero_1.jpg?size=690:388" alt="GPay">
+                        <p>GPay</p>
+                    </div>
+                    <div class="payment-option" data-payment="paytm">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Paytm_logo.png/640px-Paytm_logo.png" alt="Paytm">
+                        <p>Paytm</p>
+                    </div>
+                    <div class="payment-option" data-payment="phonepe">
+                        <img src="https://www.phonepe.com/webstatic/12067/static/PhonePe_vertical-16158be8710408f3561e1d07d01d5d89.png" alt="PhonePe">
+                        <p>PhonePe</p>
+                    </div>
+                </div>
+                
+                <!-- Payment Details -->
+                <div id="paymentDetails" class="payment-details">
+                    <h3>Payment Instructions</h3>
+                    <div class="payment-qr">
+                        <img id="qrCode" src="" alt="QR Code">
+                    </div>
+                    <p id="paymentNumber">Payment UPI ID: </p>
+                    <p id="paymentName">Account Name: Lorry Rental Agency</p>
+                    <p style="color: #666; font-size: 14px; margin-top: 10px;">
+                        Please complete the payment to confirm your booking.
+                    </p>
+                    
+                    <div class="payment-success" id="paymentSuccess">
+                        ✅ Payment Verified Successfully! You can now proceed with booking.
+                    </div>
+                </div>
+            </div>
+            
+            <button type="submit" id="bookButton">Book Now</button>
+        </form>
+    </div>
+
+    <div class="contact">
+        <h2>Contact Us</h2>
+        <p>📞 Phone: +91 98765 43210</p>
+        <p>📍 Address: Lorry Rentals, Pollachi, Coimbatore</p>
+        <div class="Discription">
+            <h2>Description</h2>
+            <p>Customer to fill the diesel</p>
+        </div>
+    </div>
+</div>
+
+<!-- Admin Page (Hidden Initially) -->
+<div id="adminPage">
+    <h2>Admin Dashboard</h2>
+    
+    <div class="admin-nav">
+        <button class="admin-nav-btn active" data-section="dashboard">Dashboard</button>
+        <button class="admin-nav-btn" data-section="bookings">Bookings</button>
+        <button class="admin-nav-btn" data-section="vehicles">Vehicles</button>
+        <button class="admin-nav-btn" data-section="fees">Fee Settings</button>
+        <button class="admin-nav-btn" data-section="settings">Settings</button>
+        <button class="admin-nav-btn" data-section="payment">Payment Settings</button>
+    </div>
+    
+    <!-- Dashboard Section -->
+    <div id="dashboardSection" class="admin-section active">
+        <h3>Overview</h3>
+        <div class="admin-stats">
+            <div class="stat-card">
+                <h3>Total Bookings</h3>
+                <p id="totalBookings">0</p>
+            </div>
+            <div class="stat-card">
+                <h3>Pending</h3>
+                <p id="pendingBookings">0</p>
+            </div>
+            <div class="stat-card">
+                <h3>Confirmed</h3>
+                <p id="confirmedBookings">0</p>
+            </div>
+            <div class="stat-card">
+                <h3>Revenue</h3>
+                <p id="totalRevenue">₹0</p>
+            </div>
+        </div>
+        
+        <h3>Recent Bookings</h3>
+        <table class="bookings-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Customer</th>
+                    <th>Vehicle</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="recentBookingsTable">
+                <!-- Recent bookings will be populated here -->
+            </tbody>
+        </table>
+    </div>
+    
+    <!-- Bookings Section -->
+    <div id="bookingsSection" class="admin-section">
+        <h3>All Bookings</h3>
+        <table class="bookings-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Customer</th>
+                    <th>Contact</th>
+                    <th>Vehicle</th>
+                    <th>Date</th>
+                    <th>Location</th>
+                    <th>Payment</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="allBookingsTable">
+                <!-- All bookings will be populated here -->
+            </tbody>
+        </table>
+    </div>
+    
+    <!-- Vehicles Section -->
+    <div id="vehiclesSection" class="admin-section">
+        <h3>Vehicle Management</h3>
+        <div class="form-group">
+            <label for="vehicleName">Vehicle Name</label>
+            <input type="text" id="vehicleName">
+        </div>
+        <div class="form-group">
+            <label for="vehicleImage">Vehicle Image URL</label>
+            <input type="text" id="vehicleImage">
+        </div>
+        <div class="form-group">
+            <label for="vehiclePriceDay">Price per Day (₹)</label>
+            <input type="number" id="vehiclePriceDay">
+        </div>
+        <div class="form-group">
+            <label for="vehiclePriceHour">Price per Hour (₹)</label>
+            <input type="number" id="vehiclePriceHour">
+        </div>
+        <button id="addVehicleBtn">Add Vehicle</button>
+        
+        <h3>Current Vehicles</h3>
+        <div id="vehicleList" class="services">
+            <!-- Vehicles will be listed here -->
+        </div>
+    </div>
+    
+    <!-- Fee Settings Section -->
+    <div id="feesSection" class="admin-section">
+        <h3>Fee Settings</h3>
+        <div class="fee-settings">
+            <div class="fee-setting">
+                <h4>Tax Settings</h4>
+                <div class="form-group">
+                    <label for="taxPercentageInput">Tax Percentage (%)</label>
+                    <input type="number" id="taxPercentageInput" min="0" max="100" step="0.1" value="10">
+                </div>
+                <p style="font-size: 14px; color: #666;">
+                    This percentage will be applied to the vehicle rental cost as service tax.
+                </p>
+            </div>
+            
+            <div class="fee-setting">
+                <h4>Maintenance Fee</h4>
+                <div class="form-group">
+                    <label for="maintenanceFeeInput">Maintenance Fee (₹)</label>
+                    <input type="number" id="maintenanceFeeInput" min="0" value="500">
+                </div>
+                <p style="font-size: 14px; color: #666;">
+                    This fixed fee will be added to every booking for vehicle maintenance.
+                </p>
+            </div>
+        </div>
+        
+        <button id="saveFeeSettingsBtn">Save Fee Settings</button>
+        <div id="feeSettingsSuccess" class="success-message" style="display: none;">
+            ✅ Fee settings updated successfully!
+        </div>
+    </div>
+    
+    <!-- Settings Section -->
+    <div id="settingsSection" class="admin-section">
+        <h3>Admin Settings</h3>
+        <div class="form-group">
+            <label for="adminUsername">Admin Username</label>
+            <input type="text" id="adminUsername" value="admin">
+        </div>
+        <div class="form-group">
+            <label for="adminPassword">Admin Password</label>
+            <input type="password" id="adminPassword" value="admin123">
+        </div>
+        <div class="form-group">
+            <label for="agencyName">Agency Name</label>
+            <input type="text" id="agencyName" value="Lorry Rental Agency">
+        </div>
+        <div class="form-group">
+            <label for="agencyContact">Contact Number</label>
+            <input type="text" id="agencyContact" value="+91 98765 43210">
+        </div>
+        <div class="form-group">
+            <label for="agencyAddress">Address</label>
+            <input type="text" id="agencyAddress" value="Lorry Rentals, Pollachi, Coimbatore">
+        </div>
+        <button id="saveSettingsBtn">Save Settings</button>
+        <div id="settingsSuccess" class="success-message" style="display: none;">
+            ✅ Settings updated successfully!
+        </div>
+    </div>
+    
+    <!-- Payment Settings Section -->
+    <div id="paymentSection" class="admin-section">
+        <h3>Payment Settings</h3>
+        
+        <!-- GPay Settings -->
+        <div class="payment-method-settings" style="margin-bottom: 20px; padding: 15px; border: 1px solid #ddd; border-radius: 5px;">
+            <h4>GPay Settings</h4>
+            <div class="form-group">
+                <label for="gpayUpi">GPay UPI ID</label>
+                <input type="text" id="gpayUpi" placeholder="Enter GPay UPI ID">
+            </div>
+            <div class="form-group">
+                <label>QR Code</label>
+                <div style="margin-top: 10px;">
+                    <div id="gpayQrPreview" style="text-align: center; margin: 10px 0;">
+                        <img id="gpayQrImage" src="" alt="GPay QR Code" style="max-width: 150px; border: 1px solid #ddd; border-radius: 5px;">
+                    </div>
+                    <input type="file" id="gpayQrUpload" accept="image/*" style="margin: 5px 0;">
+                    <button type="button" id="gpayQrRemove" class="action-btn cancel-btn" style="width: auto; margin-top: 5px;">Remove Custom QR</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Paytm Settings -->
+        <div class="payment-method-settings" style="margin-bottom: 20px; padding: 15px; border: 1px solid #ddd; border-radius: 5px;">
+            <h4>Paytm Settings</h4>
+            <div class="form-group">
+                <label for="paytmUpi">Paytm UPI ID</label>
+                <input type="text" id="paytmUpi" placeholder="Enter Paytm UPI ID">
+            </div>
+            <div class="form-group">
+                <label>QR Code</label>
+                <div style="margin-top: 10px;">
+                    <div id="paytmQrPreview" style="text-align: center; margin: 10px 0;">
+                        <img id="paytmQrImage" src="" alt="Paytm QR Code" style="max-width: 150px; border: 1px solid #ddd; border-radius: 5px;">
+                    </div>
+                    <input type="file" id="paytmQrUpload" accept="image/*" style="margin: 5px 0;">
+                    <button type="button" id="paytmQrRemove" class="action-btn cancel-btn" style="width: auto; margin-top: 5px;">Remove Custom QR</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- PhonePe Settings -->
+        <div class="payment-method-settings" style="margin-bottom: 20px; padding: 15px; border: 1px solid #ddd; border-radius: 5px;">
+            <h4>PhonePe Settings</h4>
+            <div class="form-group">
+                <label for="phonepeUpi">PhonePe UPI ID</label>
+                <input type="text" id="phonepeUpi" placeholder="Enter PhonePe UPI ID">
+            </div>
+            <div class="form-group">
+                <label>QR Code</label>
+                <div style="margin-top: 10px;">
+                    <div id="phonepeQrPreview" style="text-align: center; margin: 10px 0;">
+                        <img id="phonepeQrImage" src="" alt="PhonePe QR Code" style="max-width: 150px; border: 1px solid #ddd; border-radius: 5px;">
+                    </div>
+                    <input type="file" id="phonepeQrUpload" accept="image/*" style="margin: 5px 0;">
+                    <button type="button" id="phonepeQrRemove" class="action-btn cancel-btn" style="width: auto; margin-top: 5px;">Remove Custom QR</button>
+                </div>
+            </div>
+        </div>
+        
+        <button id="savePaymentSettingsBtn">Save Payment Settings</button>
+        <div id="paymentSettingsSuccess" class="success-message" style="display: none;">
+            ✅ Payment settings updated successfully!
+        </div>
+    </div>
+</div>
+
+<!-- Booking Details Modal -->
+<div id="bookingModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Booking Details</h2>
+        <div id="modalBookingDetails">
+            <!-- Booking details will be populated here -->
+        </div>
+    </div>
+</div>
+
+<script>
+    // Vehicle pricing data
+    const vehiclePrices = {
+        "TATA LPT": { day: 7000, hour: 300 },
+        "Bharath Benz HDT T": { day: 25000, hour: 1000 },
+        "TATA 407": { day: 12000, hour: 500 },
+        "Eicher Pro 3019": { day: 5000, hour: 200 },
+        "TATA Signa 4825": { day: 8000, hour: 350 },
+        "Volvo FM 400 HD": { day: 20000, hour: 900 },
+        "Mahindra Tyuxo 31-202 HP": { day: 18000, hour: 800 },
+        "Eicher Pro 6000 Series": { day: 25000, hour: 1000 },
+        "Asok Leyland V3718": { day: 25000, hour: 1000 },
+        "Mahindra Blazo X46": { day: 15000, hour: 600 },
+        "TATA Signa 4225.TK Tipper": { day: 20000, hour: 900 }
+    };
+
+    // Server simulation for booking storage
+    class Server {
+        constructor() {
+            this.bookings = [];
+            this.paymentMethods = {
+                gpay: {
+                    qr: "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=UPIID:lorryrentalagency@okhdfcbank",
+                    number: "lorryrentalagency@okhdfcbank",
+                    customQr: null
+                },
+                paytm: {
+                    qr: "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=UPIID:lorryrentalagency@paytm",
+                    number: "lorryrentalagency@paytm",
+                    customQr: null
+                },
+                phonepe: {
+                    qr: "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=UPIID:lorryrentalagency@ybl",
+                    number: "lorryrentalagency@ybl",
+                    customQr: null
+                }
+            };
+            
+            // Initialize fee settings
+            this.feeSettings = {
+                taxPercentage: 10,
+                maintenanceFee: 500
+            };
+        }
+        
+        // Simulate saving booking to server
+        saveBooking(booking) {
+            this.bookings.push(booking);
+            console.log("Booking saved to server:", booking);
+            return true;
+        }
+        
+        // Simulate fetching bookings from server
+        getBookings() {
+            return this.bookings;
+        }
+        
+        // Simulate updating booking status
+        updateBookingStatus(bookingId, status) {
+            const booking = this.bookings.find(b => b.id === bookingId);
+            if (booking) {
+                booking.status = status;
+                console.log("Booking status updated:", bookingId, status);
+                return true;
+            }
+            return false;
+        }
+        
+        // Simulate getting payment methods
+        getPaymentMethods() {
+            return this.paymentMethods;
+        }
+        
+        // Simulate updating payment methods
+        updatePaymentMethods(methods) {
+            this.paymentMethods = methods;
+            console.log("Payment methods updated:", methods);
+            return true;
+        }
+        
+        // Get fee settings
+        getFeeSettings() {
+            return this.feeSettings;
+        }
+        
+        // Update fee settings
+        updateFeeSettings(settings) {
+            this.feeSettings = settings;
+            console.log("Fee settings updated:", settings);
+            return true;
+        }
+    }
+    
+    // Create server instance
+    const server = new Server();
+
+    // Helper: API request with optional auth
+    async function apiRequest(path, method = 'GET', body = null) {
+        try {
+            const headers = { 'Content-Type': 'application/json' };
+            const token = localStorage.getItem('token');
+            if (token) headers['Authorization'] = 'Bearer ' + token;
+
+            const res = await fetch(path, {
+                method,
+                headers,
+                body: body ? JSON.stringify(body) : null
+            });
+
+            const contentType = res.headers.get('content-type') || '';
+            let data = null;
+            if (contentType.includes('application/json')) data = await res.json();
+
+            if (!res.ok) {
+                const err = new Error('Request failed');
+                err.status = res.status;
+                err.body = data;
+                throw err;
+            }
+
+            return data;
+        } catch (err) {
+            // Network or server error — bubble up for callers to fallback
+            throw err;
+        }
+    }
+
+    // Handle Login (use backend if available, otherwise fallback to local simulated auth)
+    document.getElementById("loginForm").addEventListener("submit", async function(event) {
+        event.preventDefault();
+
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+        const errorMessage = document.getElementById("errorMessage");
+        errorMessage.innerText = '';
+
+        try {
+            // Try backend login
+            const resp = await apiRequest('/api/login', 'POST', { username, password });
+            // On success, store token & role
+            if (resp && resp.token) {
+                localStorage.setItem('token', resp.token);
+                localStorage.setItem('role', resp.user && resp.user.role ? resp.user.role : 'customer');
+                showSuccess('✅ Login successful');
+                document.getElementById('loginPage').style.display = 'none';
+                document.getElementById('logoutBtn').style.display = 'block';
+
+                if (localStorage.getItem('role') === 'admin') {
+                    document.getElementById('adminPage').style.display = 'block';
+                    loadAdminData();
+                } else {
+                    document.getElementById('bookingPage').style.display = 'block';
+                }
+                return;
+            }
+        } catch (err) {
+            // If backend unavailable or login failed, try local simulated auth
+            console.warn('Backend login failed, falling back to local auth:', err);
+        }
+
+        // Local fallback (for demo without backend)
+        const customerUsername = "nishanth";
+        const customerPassword = "nishanth";
+        const adminUsername = "admin";
+        const adminPassword = "admin123";
+
+        if (username === customerUsername && password === customerPassword) {
+            showSuccess("✅ Customer Login Successful (local)");
+            document.getElementById("loginPage").style.display = "none";
+            document.getElementById("bookingPage").style.display = "block";
+            document.getElementById("logoutBtn").style.display = "block";
+            localStorage.removeItem('token');
+            localStorage.setItem('role', 'customer');
+        } else if (username === adminUsername && password === adminPassword) {
+            showSuccess("✅ Admin Login Successful (local)");
+            document.getElementById("loginPage").style.display = "none";
+            document.getElementById("adminPage").style.display = "block";
+            document.getElementById("logoutBtn").style.display = "block";
+            localStorage.removeItem('token');
+            localStorage.setItem('role', 'admin');
+            loadAdminData();
+        } else {
+            errorMessage.innerText = "❌ Invalid Username or Password!";
+        }
+    });
+
+    // Logout Button
+    document.getElementById("logoutBtn").addEventListener("click", function() {
+        document.getElementById("loginPage").style.display = "block";
+        document.getElementById("bookingPage").style.display = "none";
+        document.getElementById("adminPage").style.display = "none";
+        document.getElementById("logoutBtn").style.display = "none";
+        document.getElementById("username").value = "";
+        document.getElementById("password").value = "";
+        document.getElementById("errorMessage").innerText = "";
+    });
+
+    // Cost Calculation Logic
+    function calculateCost() {
+        const selectedVehicle = document.getElementById("service").value;
+        const rentalType = document.querySelector('input[name="rentalType"]:checked').value;
+        const duration = parseInt(document.getElementById("duration").value);
+        
+        if (!selectedVehicle || !rentalType || !duration) return;
+        
+        const vehiclePrice = vehiclePrices[selectedVehicle];
+        let baseCost = 0;
+        
+        if (rentalType === "hourly") {
+            baseCost = vehiclePrice.hour * duration;
+        } else {
+            baseCost = vehiclePrice.day * duration;
+        }
+        
+        // Get fee settings from server
+        const feeSettings = server.getFeeSettings();
+        const taxPercentage = feeSettings.taxPercentage;
+        const maintenanceFee = feeSettings.maintenanceFee;
+        
+        const tax = baseCost * (taxPercentage / 100);
+        const totalCost = baseCost + tax + maintenanceFee;
+        
+        // Update cost display
+        document.getElementById("vehicleCost").textContent = `₹${baseCost.toLocaleString()}`;
+        document.getElementById("taxPercentage").textContent = taxPercentage;
+        document.getElementById("taxAmount").textContent = `₹${tax.toLocaleString()}`;
+        document.getElementById("maintenanceFee").textContent = `₹${maintenanceFee.toLocaleString()}`;
+        document.getElementById("totalCost").textContent = `₹${totalCost.toLocaleString()}`;
+    }
+    
+    // Update duration unit based on rental type
+    function updateDurationUnit() {
+        const rentalType = document.querySelector('input[name="rentalType"]:checked').value;
+        const durationUnit = document.getElementById("durationUnit");
+        
+        if (rentalType === "hourly") {
+            durationUnit.textContent = "hours";
+        } else {
+            durationUnit.textContent = "days";
+        }
+        
+        // Recalculate cost
+        calculateCost();
+    }
+    
+    // Event listeners for cost calculation
+    document.getElementById("service").addEventListener("change", calculateCost);
+    document.getElementById("duration").addEventListener("input", calculateCost);
+    document.querySelectorAll('input[name="rentalType"]').forEach(radio => {
+        radio.addEventListener("change", updateDurationUnit);
+    });
+    
+    // Initialize cost calculation on page load
+    document.addEventListener("DOMContentLoaded", function() {
+        calculateCost();
+    });
+
+    // Payment Module Logic
+    const paymentOptions = document.querySelectorAll('.payment-option');
+    const paymentDetails = document.getElementById('paymentDetails');
+    const qrCode = document.getElementById('qrCode');
+    const paymentNumber = document.getElementById('paymentNumber');
+    const paymentSuccess = document.getElementById('paymentSuccess');
+    const bookButton = document.getElementById('bookButton');
+    
+    // Load payment methods from backend or fallback to local
+    async function loadPaymentMethods() {
+        try {
+            const resp = await apiRequest('/api/payment-settings', 'GET');
+            // resp expected to be an object like { gpay: { upiId, qrCode, customQr }, ... }
+            const paymentMethods = {
+                gpay: { number: resp.gpay?.upiId || '', qr: resp.gpay?.qrCode || '', customQr: resp.gpay?.customQr || null },
+                paytm: { number: resp.paytm?.upiId || '', qr: resp.paytm?.qrCode || '', customQr: resp.paytm?.customQr || null },
+                phonepe: { number: resp.phonepe?.upiId || '', qr: resp.phonepe?.qrCode || '', customQr: resp.phonepe?.customQr || null }
+            };
+
+            // Save into local simulated server structure for UI usage
+            server.updatePaymentMethods(paymentMethods);
+
+            // Update payment settings form
+            document.getElementById('gpayUpi').value = paymentMethods.gpay.number;
+            document.getElementById('paytmUpi').value = paymentMethods.paytm.number;
+            document.getElementById('phonepeUpi').value = paymentMethods.phonepe.number;
+
+            // Load QR codes
+            updateQrPreviews();
+
+            // Setup QR upload handlers
+            setupQrUploadHandlers();
+            return;
+        } catch (err) {
+            console.warn('Could not load payment settings from backend, using local fallback:', err);
+            // Fallback to local simulated server
+            const paymentMethods = server.getPaymentMethods();
+            document.getElementById('gpayUpi').value = paymentMethods.gpay.number;
+            document.getElementById('paytmUpi').value = paymentMethods.paytm.number;
+            document.getElementById('phonepeUpi').value = paymentMethods.phonepe.number;
+            updateQrPreviews();
+            setupQrUploadHandlers();
+        }
+    }
+    
+    // Update QR code previews in admin panel
+    function updateQrPreviews() {
+        const paymentMethods = server.getPaymentMethods();
+        document.getElementById('gpayQrImage').src = paymentMethods.gpay.customQr || paymentMethods.gpay.qr;
+        document.getElementById('paytmQrImage').src = paymentMethods.paytm.customQr || paymentMethods.paytm.qr;
+        document.getElementById('phonepeQrImage').src = paymentMethods.phonepe.customQr || paymentMethods.phonepe.qr;
+    }
+    
+    // Setup QR code upload handlers
+    function setupQrUploadHandlers() {
+        // GPay QR upload
+        document.getElementById('gpayQrUpload').addEventListener('change', function(e) {
+            handleQrUpload(e, 'gpay');
+        });
+        
+        // Paytm QR upload
+        document.getElementById('paytmQrUpload').addEventListener('change', function(e) {
+            handleQrUpload(e, 'paytm');
+        });
+        
+        // PhonePe QR upload
+        document.getElementById('phonepeQrUpload').addEventListener('change', function(e) {
+            handleQrUpload(e, 'phonepe');
+        });
+        
+        // QR removal buttons
+        document.getElementById('gpayQrRemove').addEventListener('click', function() {
+            removeCustomQr('gpay');
+        });
+        
+        document.getElementById('paytmQrRemove').addEventListener('click', function() {
+            removeCustomQr('paytm');
+        });
+        
+        document.getElementById('phonepeQrRemove').addEventListener('click', function() {
+            removeCustomQr('phonepe');
+        });
+    }
+    
+    // Handle QR code upload
+    function handleQrUpload(event, paymentMethod) {
+        const file = event.target.files[0];
+        if (file) {
+            // Check if file is an image
+            if (!file.type.startsWith('image/')) {
+                alert('Please upload an image file');
+                return;
+            }
+            
+            // Check file size (max 2MB)
+            if (file.size > 2 * 1024 * 1024) {
+                alert('Please upload an image smaller than 2MB');
+                return;
+            }
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                // Get current payment methods
+                const paymentMethods = server.getPaymentMethods();
+                
+                // Store the custom QR code
+                paymentMethods[paymentMethod].customQr = e.target.result;
+                
+                // Update the preview
+                document.getElementById(paymentMethod + 'QrImage').src = e.target.result;
+                
+                // Save to server
+                server.updatePaymentMethods(paymentMethods);
+                
+                showSuccess(`✅ ${paymentMethod.toUpperCase()} QR code updated successfully!`);
+            };
+            reader.onerror = function() {
+                alert('Error reading file. Please try again.');
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+    
+    // Remove custom QR code
+    function removeCustomQr(paymentMethod) {
+        const paymentMethods = server.getPaymentMethods();
+        
+        if (paymentMethods[paymentMethod].customQr) {
+            paymentMethods[paymentMethod].customQr = null;
+            
+            // Reset to default QR
+            document.getElementById(paymentMethod + 'QrImage').src = paymentMethods[paymentMethod].qr;
+            
+            // Clear the file input
+            document.getElementById(paymentMethod + 'QrUpload').value = '';
+            
+            // Save to server
+            server.updatePaymentMethods(paymentMethods);
+            
+            showSuccess(`✅ ${paymentMethod.toUpperCase()} QR code removed!`);
+        } else {
+            showSuccess(`ℹ️ No custom QR code found for ${paymentMethod.toUpperCase()}`);
+        }
+    }
+    
+    // Handle payment option selection
+    paymentOptions.forEach(option => {
+        option.addEventListener('click', function() {
+            // Remove selected class from all options
+            paymentOptions.forEach(opt => opt.classList.remove('selected'));
+            
+            // Add selected class to clicked option
+            this.classList.add('selected');
+            
+            // Get payment method
+            const method = this.getAttribute('data-payment');
+            
+            // Get payment methods from server
+            const paymentMethods = server.getPaymentMethods();
+            
+            // Update payment details - use custom QR if available
+            const qrToUse = paymentMethods[method].customQr || paymentMethods[method].qr;
+            qrCode.src = qrToUse;
+            paymentNumber.textContent = "Payment UPI ID: " + paymentMethods[method].number;
+            
+            // Show payment details
+            paymentDetails.classList.add('active');
+            
+            // Reset success message
+            paymentSuccess.style.display = 'none';
+            bookButton.disabled = false;
+        });
+    });
+    
+    // Handle Booking (send to backend if available, otherwise local fallback)
+    document.getElementById("bookingForm").addEventListener("submit", async function(event) {
+        event.preventDefault();
+
+        // Check if payment method is selected
+        const selectedPayment = document.querySelector('.payment-option.selected');
+        if (!selectedPayment) {
+            alert("Please select a payment method");
+            return;
+        }
+
+        const name = document.getElementById("name").value;
+        const contact = document.getElementById("contact").value;
+        const date = document.getElementById("date").value;
+        const location = document.getElementById("location").value;
+        const service = document.getElementById("service").value;
+        const rentalType = document.querySelector('input[name="rentalType"]:checked').value;
+        const duration = parseInt(document.getElementById("duration").value);
+        const paymentMethod = selectedPayment.getAttribute('data-payment');
+
+        // Calculate final cost
+        const vehiclePrice = vehiclePrices[service];
+        let baseCost = 0;
+        if (rentalType === "hourly") baseCost = vehiclePrice.hour * duration;
+        else baseCost = vehiclePrice.day * duration;
+
+        // Get fee settings from local fallback server (if needed)
+        const feeSettings = server.getFeeSettings();
+        const taxPercentage = feeSettings.taxPercentage;
+        const maintenanceFee = feeSettings.maintenanceFee;
+
+        const tax = baseCost * (taxPercentage / 100);
+        const totalCost = baseCost + tax + maintenanceFee;
+
+        // Build payload matching backend schema
+        const payload = {
+            customerName: name,
+            contact: contact,
+            date: date,
+            location: location,
+            vehicle: service,
+            rentalType: rentalType,
+            duration: duration,
+            paymentMethod: paymentMethod
+        };
+
+        // Try to send to backend
+        try {
+            const resp = await apiRequest('/api/bookings', 'POST', payload);
+            // Backend returns booking object on success
+            const bookingFromServer = resp && resp.booking ? resp.booking : null;
+            if (bookingFromServer) {
+                // Show booking success with backend booking
+                showBookingSuccess({
+                    id: bookingFromServer.bookingId || bookingFromServer.bookingId || bookingFromServer.id,
+                    name: bookingFromServer.customerName || name,
+                    contact: bookingFromServer.contact || contact,
+                    date: bookingFromServer.date || date,
+                    location: bookingFromServer.location || location,
+                    service: bookingFromServer.vehicle || service,
+                    rentalType: bookingFromServer.rentalType || rentalType,
+                    duration: bookingFromServer.duration || duration,
+                    cost: bookingFromServer.cost || totalCost,
+                    paymentMethod: bookingFromServer.paymentMethod || paymentMethod,
+                    status: bookingFromServer.status || 'pending',
+                    timestamp: bookingFromServer.timestamp || new Date().toISOString()
+                });
+            } else {
+                // If backend responded but without booking object, fall back to local save
+                server.saveBooking({
+                    id: 'LR' + Date.now(),
+                    name,
+                    contact,
+                    date,
+                    location,
+                    service,
+                    rentalType,
+                    duration,
+                    cost: totalCost,
+                    paymentMethod,
+                    status: 'pending',
+                    timestamp: new Date().toISOString()
+                });
+                showBookingSuccess({ id: 'LR' + Date.now(), name, contact, date, location, service, rentalType, duration, cost: totalCost, paymentMethod, status: 'pending' });
+            }
+        } catch (err) {
+            console.warn('Could not save booking to backend, using local fallback:', err);
+            // Fallback: save to local simulated server
+            const bookingId = "LR" + Date.now();
+            const booking = {
+                id: bookingId,
+                name,
+                contact,
+                date,
+                location,
+                service,
+                rentalType,
+                duration,
+                cost: totalCost,
+                paymentMethod,
+                status: 'pending',
+                timestamp: new Date().toISOString()
+            };
+            server.saveBooking(booking);
+            showBookingSuccess(booking);
+        }
+
+        // Reset form and UI state
+        this.reset();
+        paymentDetails.classList.remove('active');
+        paymentSuccess.style.display = 'none';
+        bookButton.disabled = false;
+        paymentOptions.forEach(opt => opt.classList.remove('selected'));
+        calculateCost();
+    });
+
+    // Show booking success with details
+    function showBookingSuccess(booking) {
+        // Hide form and show success section
+        document.getElementById('bookingForm').style.display = 'none';
+        document.getElementById('bookingSuccessSection').style.display = 'block';
+        
+        // Populate booking details
+        document.getElementById('bookingIdDisplay').textContent = booking.id;
+        document.getElementById('customerNameDisplay').textContent = booking.name;
+        document.getElementById('contactDisplay').textContent = booking.contact;
+        document.getElementById('dateDisplay').textContent = new Date(booking.date).toLocaleDateString();
+        document.getElementById('locationDisplay').textContent = booking.location;
+        document.getElementById('vehicleDisplay').textContent = booking.service;
+        document.getElementById('rentalTypeDisplay').textContent = booking.rentalType.charAt(0).toUpperCase() + booking.rentalType.slice(1);
+        document.getElementById('durationDisplay').textContent = `${booking.duration} ${booking.rentalType === 'hourly' ? 'hours' : 'days'}`;
+        document.getElementById('costDisplay').textContent = `₹${booking.cost.toLocaleString()}`;
+        document.getElementById('paymentDisplay').textContent = booking.paymentMethod.toUpperCase();
+        
+        // Scroll to top
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // New Booking Button
+    document.getElementById('newBookingBtn').addEventListener('click', function() {
+        document.getElementById('bookingSuccessSection').style.display = 'none';
+        document.getElementById('bookingForm').style.display = 'block';
+        document.getElementById('bookingForm').reset();
+        calculateCost();
+    });
+
+    // Admin Page Logic
+    async function loadAdminData() {
+        let bookings = [];
+        // Try to fetch bookings from backend
+        try {
+            const resp = await apiRequest('/api/bookings', 'GET');
+            // If backend returns an array
+            if (Array.isArray(resp)) bookings = resp;
+            else if (resp && resp.bookings) bookings = resp.bookings;
+        } catch (err) {
+            console.warn('Could not fetch bookings from backend, using local fallback:', err);
+            bookings = server.getBookings();
+        }
+
+        // Update stats
+        document.getElementById('totalBookings').textContent = bookings.length;
+        document.getElementById('pendingBookings').textContent = bookings.filter(b => (b.status === 'pending')).length;
+        document.getElementById('confirmedBookings').textContent = bookings.filter(b => (b.status === 'confirmed')).length;
+
+        // Calculate revenue
+        const revenue = bookings.filter(b => b.status === 'confirmed').reduce((sum, b) => sum + (b.cost || 0), 0);
+        document.getElementById('totalRevenue').textContent = '₹' + revenue.toLocaleString();
+
+        // Populate recent bookings table (last 5)
+        const recentBookingsTable = document.getElementById('recentBookingsTable');
+        recentBookingsTable.innerHTML = '';
+
+        const recentBookings = bookings.slice(-5).reverse();
+        recentBookings.forEach(booking => {
+            const id = booking.bookingId || booking.id || booking._id || '';
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${id}</td>
+                <td>${booking.customerName || booking.name || ''}</td>
+                <td>${booking.vehicle || booking.service || ''}</td>
+                <td>${new Date(booking.date).toLocaleDateString()}</td>
+                <td class="status-${booking.status}">${(booking.status || '').charAt(0).toUpperCase() + (booking.status || '').slice(1)}</td>
+                <td>
+                    <button class="action-btn view-btn view-booking" data-id="${id}">View</button>
+                    ${booking.status === 'pending' ? 
+                        `<button class="action-btn confirm-btn" data-id="${id}">Confirm</button>
+                         <button class="action-btn cancel-btn" data-id="${id}">Cancel</button>` : 
+                        ''}
+                </td>
+            `;
+            recentBookingsTable.appendChild(row);
+        });
+
+        // Populate all bookings table
+        const allBookingsTable = document.getElementById('allBookingsTable');
+        allBookingsTable.innerHTML = '';
+
+        bookings.slice().reverse().forEach(booking => {
+            const id = booking.bookingId || booking.id || booking._id || '';
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${id}</td>
+                <td>${booking.customerName || booking.name || ''}</td>
+                <td>${booking.contact || ''}</td>
+                <td>${booking.vehicle || booking.service || ''}</td>
+                <td>${new Date(booking.date).toLocaleDateString()}</td>
+                <td>${booking.location || ''}</td>
+                <td>${(booking.paymentMethod || '').toUpperCase()}</td>
+                <td class="status-${booking.status}">${(booking.status || '').charAt(0).toUpperCase() + (booking.status || '').slice(1)}</td>
+                <td>
+                    <button class="action-btn view-btn view-booking" data-id="${id}">View</button>
+                    ${booking.status === 'pending' ? 
+                        `<button class="action-btn confirm-btn" data-id="${id}">Confirm</button>
+                         <button class="action-btn cancel-btn" data-id="${id}">Cancel</button>` : 
+                        ''}
+                </td>
+            `;
+            allBookingsTable.appendChild(row);
+        });
+
+        // Add event listeners to action buttons
+        document.querySelectorAll('.confirm-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const bookingId = this.getAttribute('data-id');
+                updateBookingStatus(bookingId, 'confirmed');
+            });
+        });
+
+        document.querySelectorAll('.cancel-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const bookingId = this.getAttribute('data-id');
+                updateBookingStatus(bookingId, 'cancelled');
+            });
+        });
+
+        document.querySelectorAll('.view-booking').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const bookingId = this.getAttribute('data-id');
+                showBookingDetails(bookingId);
+            });
+        });
+
+        // Load vehicles
+        loadVehicles();
+
+        // Load payment methods
+        loadPaymentMethods();
+
+        // Load fee settings
+        loadFeeSettings();
+    }
+    
+    async function updateBookingStatus(bookingId, status) {
+        // Try backend update
+        try {
+            await apiRequest(`/api/bookings/${bookingId}/status`, 'PUT', { status });
+            showSuccess(`✅ Booking ${status} successfully!`);
+            loadAdminData();
+            return;
+        } catch (err) {
+            console.warn('Could not update booking status via backend, using local fallback:', err);
+        }
+
+        // Fallback: local simulated server
+        if (server.updateBookingStatus(bookingId, status)) {
+            loadAdminData(); // Refresh the admin data
+            showSuccess(`✅ Booking ${status} successfully! (local)`);
+        }
+    }
+    
+    function showBookingDetails(bookingId) {
+        const bookings = server.getBookings();
+        const booking = bookings.find(b => b.id === bookingId);
+        
+        if (booking) {
+            const modalContent = document.getElementById('modalBookingDetails');
+            modalContent.innerHTML = `
+                <div class="booking-details">
+                    <p><strong>Booking ID:</strong> ${booking.id}</p>
+                    <p><strong>Customer Name:</strong> ${booking.name}</p>
+                    <p><strong>Contact Number:</strong> ${booking.contact}</p>
+                    <p><strong>Booking Date:</strong> ${new Date(booking.date).toLocaleDateString()}</p>
+                    <p><strong>Location:</strong> ${booking.location}</p>
+                    <p><strong>Vehicle:</strong> ${booking.service}</p>
+                    <p><strong>Rental Type:</strong> ${booking.rentalType.charAt(0).toUpperCase() + booking.rentalType.slice(1)}</p>
+                    <p><strong>Duration:</strong> ${booking.duration} ${booking.rentalType === 'hourly' ? 'hours' : 'days'}</p>
+                    <p><strong>Total Cost:</strong> ₹${booking.cost.toLocaleString()}</p>
+                    <p><strong>Payment Method:</strong> ${booking.paymentMethod.toUpperCase()}</p>
+                    <p><strong>Status:</strong> <span class="status-${booking.status}">${booking.status.charAt(0).toUpperCase() + booking.status.slice(1)}</span></p>
+                    <p><strong>Booking Time:</strong> ${new Date(booking.timestamp).toLocaleString()}</p>
+                </div>
+            `;
+            
+            document.getElementById('bookingModal').style.display = 'block';
+        }
+    }
+    
+    // Close modal
+    document.querySelector('.close').addEventListener('click', function() {
+        document.getElementById('bookingModal').style.display = 'none';
+    });
+    
+    // Close modal when clicking outside
+    window.addEventListener('click', function(event) {
+        const modal = document.getElementById('bookingModal');
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+    
+    function loadVehicles() {
+        // In a real app, this would come from a database
+        // For demo, we'll hardcode the vehicles
+        const vehicles = [
+            { name: "TATA LPT", image: "https://truckcdn.cardekho.com/in/tata/1815-lpt/tata-1815-lpt.jpg", priceDay: 7000, priceHour: 300 },
+            { name: "Bharath Benz HDT T", image: "https://5.imimg.com/data5/IOS/Default/2023/6/320806107/EY/LC/ZV/186633041/product-jpeg.png", priceDay: 25000, priceHour: 1000 },
+            { name: "TATA 407", image: "https://truckcdn.cardekho.com/in/tata/407-g-sfc/tata-407-g-sfc.jpg", priceDay: 12000, priceHour: 500 },
+            { name: "Eicher Pro 3019", image: "https://www.cmv360.com/_next/image?url=https%3A%2F%2Fd1odgbsvvxl2qd.cloudfront.net%2Fsmall_Eicher_Pro_2110_CNG_Truck_d4edb70c39.webp&w=3840&q=75.jpg", priceDay: 5000, priceHour: 200 },
+            { name: "TATA Signa 4825", image: "https://5.imimg.com/data5/SELLER/Default/2022/6/DW/CQ/JR/126360925/1597393298-tata-signa-tipper-truck-1-.jpg", priceDay: 8000, priceHour: 350 },
+            { name: "Volvo FM 400 HD", image: "https://img.linemedia.com/img/s/dump-truck-Volvo-FM-400-8x4-Bordmatic---1727369990312147022_big--24092619515981524100.jpg", priceDay: 20000, priceHour: 900 },
+            { name: "Mahindra Tyuxo 31-202 HP", image: "https://svmchaser.wordpress.com/wp-content/uploads/2015/06/442fc-dsc_5767.jpg", priceDay: 18000, priceHour: 800 },
+            { name: "Eicher Pro 6000 Series", image: "https://5.imimg.com/data5/FM/UO/UQ/GLADMIN-33643285/6c36b18a27367c18af97cb978bf58f36-500x500-500x500.jpg", priceDay: 25000, priceHour: 1000 },
+            { name: "Asok Leyland V3718", image: "https://4.imimg.com/data4/AL/XM/IMOB-47670626/img_20180522_115142-jpg.jpg", priceDay: 25000, priceHour: 1000 },
+            { name: "Mahindra Blazo X46", image: "https://truckcdn.cardekho.com/in/mahindra/blazo-x-48-10x2-haulage/mahindra-blazo-x-48-10x2-haulage.jpg", priceDay: 15000, priceHour: 600 },
+            { name: "TATA Signa 4225.TK Tipper", image: "https://5.imimg.com/data5/SELLER/Default/2024/2/390279483/GV/IX/LF/23382559/whatsapp-image-2024-02-19-at-6-53-20-pm-1-500x500.jpeg", priceDay: 20000, priceHour: 900 }
+        ];
+        
+        const vehicleList = document.getElementById('vehicleList');
+        vehicleList.innerHTML = '';
+        
+        vehicles.forEach(vehicle => {
+            const vehicleDiv = document.createElement('div');
+            vehicleDiv.className = 'service';
+            vehicleDiv.innerHTML = `
+                <img src="${vehicle.image}" alt="${vehicle.name}">
+                <h3>${vehicle.name}</h3>
+                <p>A Heavy-Duty Truck</p>
+                <p>Price per day: ₹${vehicle.priceDay}, per hour:₹${vehicle.priceHour}</p>
+                <button class="action-btn cancel-btn remove-vehicle" data-name="${vehicle.name}">Remove</button>
+            `;
+            vehicleList.appendChild(vehicleDiv);
+        });
+        
+        // Add event listeners to remove buttons
+        document.querySelectorAll('.remove-vehicle').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const vehicleName = this.getAttribute('data-name');
+                if (confirm(`Are you sure you want to remove ${vehicleName}?`)) {
+                    // In a real app, this would remove from database
+                    showSuccess(`${vehicleName} removed successfully!`);
+                    loadVehicles(); // Refresh the list
+                }
+            });
+        });
+    }
+    
+    // Load fee settings from backend or fallback
+    async function loadFeeSettings() {
+        try {
+            const settings = await apiRequest('/api/settings', 'GET');
+            const tax = settings.taxPercentage !== undefined ? settings.taxPercentage : 10;
+            const maintenance = settings.maintenanceFee !== undefined ? settings.maintenanceFee : 500;
+
+            // Update local server fallback and UI
+            server.updateFeeSettings({ taxPercentage: tax, maintenanceFee: maintenance });
+            document.getElementById('taxPercentageInput').value = tax;
+            document.getElementById('maintenanceFeeInput').value = maintenance;
+            return;
+        } catch (err) {
+            console.warn('Could not load settings from backend, using local fallback:', err);
+            const feeSettings = server.getFeeSettings();
+            document.getElementById('taxPercentageInput').value = feeSettings.taxPercentage;
+            document.getElementById('maintenanceFeeInput').value = feeSettings.maintenanceFee;
+        }
+    }
+    
+    // Save fee settings
+    document.getElementById('saveFeeSettingsBtn').addEventListener('click', function() {
+        const taxPercentage = parseFloat(document.getElementById('taxPercentageInput').value);
+        const maintenanceFee = parseFloat(document.getElementById('maintenanceFeeInput').value);
+        
+        if (isNaN(taxPercentage) || isNaN(maintenanceFee)) {
+            alert("Please enter valid numbers for fee settings");
+            return;
+        }
+        
+        if (taxPercentage < 0 || taxPercentage > 100) {
+            alert("Tax percentage must be between 0 and 100");
+            return;
+        }
+        
+        if (maintenanceFee < 0) {
+            alert("Maintenance fee cannot be negative");
+            return;
+        }
+        
+        // Update fee settings
+        const feeSettings = {
+            taxPercentage: taxPercentage,
+            maintenanceFee: maintenanceFee
+        };
+        
+        server.updateFeeSettings(feeSettings);
+        
+        // Update the booking page display
+        document.getElementById('taxPercentage').textContent = taxPercentage;
+        document.getElementById('maintenanceFee').textContent = `₹${maintenanceFee.toLocaleString()}`;
+        
+        // Recalculate cost with new settings
+        calculateCost();
+        
+        // Show success message
+        const successMsg = document.getElementById('feeSettingsSuccess');
+        successMsg.style.display = 'block';
+        setTimeout(() => {
+            successMsg.style.display = 'none';
+        }, 3000);
+    });
+    
+    // Admin navigation
+    document.querySelectorAll('.admin-nav-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            // Remove active class from all buttons and sections
+            document.querySelectorAll('.admin-nav-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.admin-section').forEach(s => s.classList.remove('active'));
+            
+            // Add active class to clicked button
+            this.classList.add('active');
+            
+            // Show corresponding section
+            const sectionId = this.getAttribute('data-section') + 'Section';
+            document.getElementById(sectionId).classList.add('active');
+        });
+    });
+    
+    // Add vehicle functionality
+    document.getElementById('addVehicleBtn').addEventListener('click', function() {
+        const name = document.getElementById('vehicleName').value;
+        const image = document.getElementById('vehicleImage').value;
+        const priceDay = document.getElementById('vehiclePriceDay').value;
+        const priceHour = document.getElementById('vehiclePriceHour').value;
+        
+        if (name && image && priceDay && priceHour) {
+            // In a real app, this would add to database
+            showSuccess(`Vehicle ${name} added successfully!`);
+            
+            // Clear form
+            document.getElementById('vehicleName').value = '';
+            document.getElementById('vehicleImage').value = '';
+            document.getElementById('vehiclePriceDay').value = '';
+            document.getElementById('vehiclePriceHour').value = '';
+            
+            loadVehicles(); // Refresh the list
+        } else {
+            alert('Please fill all fields');
+        }
+    });
+    
+    // Save settings
+    document.getElementById('saveSettingsBtn').addEventListener('click', function() {
+        // In a real app, this would save to database
+        const successMsg = document.getElementById('settingsSuccess');
+        successMsg.style.display = 'block';
+        setTimeout(() => {
+            successMsg.style.display = 'none';
+        }, 3000);
+    });
+    
+    // Save payment settings
+    document.getElementById('savePaymentSettingsBtn').addEventListener('click', function() {
+        const gpayUpi = document.getElementById('gpayUpi').value;
+        const paytmUpi = document.getElementById('paytmUpi').value;
+        const phonepeUpi = document.getElementById('phonepeUpi').value;
+        
+        if (!gpayUpi || !paytmUpi || !phonepeUpi) {
+            alert("Please fill all UPI ID fields");
+            return;
+        }
+        
+        // Get current payment methods
+        const paymentMethods = server.getPaymentMethods();
+        
+        // Update payment methods
+        paymentMethods.gpay.number = gpayUpi;
+        paymentMethods.paytm.number = paytmUpi;
+        paymentMethods.phonepe.number = phonepeUpi;
+        
+        // Update QR codes only if not using custom ones
+        if (!paymentMethods.gpay.customQr) {
+            paymentMethods.gpay.qr = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=UPIID:${gpayUpi}`;
+            document.getElementById('gpayQrImage').src = paymentMethods.gpay.qr;
+        }
+        if (!paymentMethods.paytm.customQr) {
+            paymentMethods.paytm.qr = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=UPIID:${paytmUpi}`;
+            document.getElementById('paytmQrImage').src = paymentMethods.paytm.qr;
+        }
+        if (!paymentMethods.phonepe.customQr) {
+            paymentMethods.phonepe.qr = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=UPIID:${phonepeUpi}`;
+            document.getElementById('phonepeQrImage').src = paymentMethods.phonepe.qr;
+        }
+        
+        // Save to server
+        server.updatePaymentMethods(paymentMethods);
+        
+        // Show success message
+        const successMsg = document.getElementById('paymentSettingsSuccess');
+        successMsg.style.display = 'block';
+        setTimeout(() => {
+            successMsg.style.display = 'none';
+        }, 3000);
+    });
+    
+    // Utility function to show success messages
+    function showSuccess(message) {
+        // Create a temporary success message
+        const tempSuccess = document.createElement('div');
+        tempSuccess.className = 'success-message';
+        tempSuccess.textContent = message;
+        tempSuccess.style.position = 'fixed';
+        tempSuccess.style.top = '20px';
+        tempSuccess.style.left = '50%';
+        tempSuccess.style.transform = 'translateX(-50%)';
+        tempSuccess.style.zIndex = '1000';
+        tempSuccess.style.minWidth = '300px';
+        
+        document.body.appendChild(tempSuccess);
+        
+        // Remove after 3 seconds
+        setTimeout(() => {
+            document.body.removeChild(tempSuccess);
+        }, 3000);
+    }
+    
+    // Initialize the page
+    loadPaymentMethods();
+</script>
+
+</body>
+</html>
